@@ -1,0 +1,293 @@
+
+/************************************************
+        Reset
+*************************************************/
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default padding */
+ul[class],
+ol[class] {
+  padding: 0;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* Remove list styles on ul, ol elements with a class attribute */
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Natural flow and rhythm in articles by default */
+article > * + * {
+  margin-top: 1em;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations and transitions for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/************************************************
+        Root/Body & Variables
+*************************************************/
+:root {
+    --off-white: #fcfcf9;
+    --action-purple: #7165b9;
+    --light-purple: #d3bad8;
+    --eggplant: #202231;
+    --bright-purple: #b3329c;
+}
+
+body {
+    background: var(--off-white);
+}
+
+.App {
+    height: 100vh;
+    width: 100vw;
+}
+
+/************************************************
+        Blocks
+*************************************************/
+
+.splash-screen-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 100vh;
+    width: 100vw;
+}
+
+.login-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+    width: 100%;
+}
+
+.onboard-input-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.onboard-switch-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+}
+
+/************************************************
+        Text
+*************************************************/
+
+.splash-title {
+    animation: flow 5s ease-in-out infinite;
+    background: linear-gradient(
+        -60deg, 
+        var(--eggplant), 
+        var(--action-purple),
+        var(--bright-purple)
+    );
+    background-size: 300%;
+    margin: -20px 0 0 22px;
+
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.onboard-title {
+    color: var(--action-purple);
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.onboard-label {
+    color: var(--light-purple);
+    font-size: 0.85rem;
+    font-weight: 400;
+    margin: 20px 0 0;
+}
+
+.onboard-input-wrapper:focus-within .onboard-label {
+    color: var(--action-purple);
+}
+
+.onboard-switch-text {
+    color: var(--action-purple);
+    font-size: 0.85rem;
+}
+
+/************************************************
+        Forms / Inputs / Links
+*************************************************/
+
+.onboard-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.onboard-text-input {
+    border: 2px solid var(--light-purple);
+    border-radius: 13px;
+    color: var(--light-purple);
+    font-weight: 600;
+    padding: 8px;
+
+    &:active,
+    &:focus {
+        border-color: var(--action-purple);
+        color: var(--action-purple);
+    }
+}
+
+
+
+.onboard-submit {
+    background: var(--action-purple);
+    border: 2px solid var(--action-purple);
+    border-radius: 13px;
+    color: var(--off-white);
+    cursor: pointer;
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 20px 0 0;
+    padding: 8px;
+}
+
+.onboard-switch-btn {
+    border: none;
+    color: var(--bright-purple);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/************************************************
+        Graphics
+*************************************************/
+
+.splash-logo-svg {
+    height: 100px;
+    width: 100px;
+    animation: svg-change 8s ease-in-out infinite;
+}
+
+.dolphin-path {
+    stroke-dasharray: 2500;
+    stroke-dashoffset: 2500;
+    animation: draw 4s linear forwards;
+}
+
+/************************************************
+        Animations
+*************************************************/
+
+@keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+}
+
+@keyframes flow {
+    0% {
+        background-position: 0 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0 50%;
+    }
+}
+
+@keyframes svg-change {
+    0% {
+        stroke: var(--eggplant);
+    }
+
+    25% {
+        stroke: var(--action-purple);
+    }
+
+    50% {
+        stroke: var(--bright-purple);
+    }
+    
+    75% {
+        stroke: var(--action-purple);
+    }
+
+    100% {
+        stroke: var(--eggplant);
+    }
+}
