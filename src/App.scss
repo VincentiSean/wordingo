@@ -127,6 +127,12 @@ body {
     width: 100%;
 }
 
+.home-wrapper {
+    height: 100vh;
+    overflow: hidden;
+    width: 100vw;
+}
+
 .onboard-input-wrapper {
     display: flex;
     flex-direction: column;
@@ -141,6 +147,50 @@ body {
     bottom: 10px;
     left: 0;
     width: 100%;
+}
+
+.nav-wrapper {
+    border-top: 1px solid var(--light-purple);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.create-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.create-input-wrapper {
+    margin: 60px auto 0;
+    width: 90%
+}
+
+.new-word-wrapper {
+    margin: 30px 0 0;
+    width: 75%;
+
+    &:focus-within .new-word {
+        opacity: 1;
+    }
 }
 
 /************************************************
@@ -208,8 +258,6 @@ body {
     }
 }
 
-
-
 .onboard-submit {
     background: var(--action-purple);
     border: 2px solid var(--action-purple);
@@ -230,6 +278,61 @@ body {
     font-weight: 600;
 }
 
+.nav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.top-nav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.deck-title-input {
+    border: none;
+    border-bottom: 1px solid var(--action-purple);
+    color: var(--action-purple);
+    font-size: 1.125rem;
+    font-weight: 600;
+    padding: 0 1px;
+    width: 99%;
+
+    &::placeholder {
+        color: var(--action-purple);
+        opacity: 0.6;
+    }
+}
+
+.new-word {
+    border: 1px solid var(--action-purple);
+    color: var(--action-purple);
+    font-size: 0.95rem;
+    font-weight: 600;
+    opacity: 0.6;
+    padding: 10px;
+    width: 100%;
+}
+
+.top-input {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.bottom-input {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-top: none;
+}
+
+.add-more-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 20px 0 0;
+}
+
 /************************************************
         Graphics
 *************************************************/
@@ -244,6 +347,14 @@ body {
     stroke-dasharray: 2500;
     stroke-dashoffset: 2500;
     animation: draw 4s linear forwards;
+}
+
+.nav-svg {
+    stroke: var(--action-purple);
+}
+
+.top-nav-svg {
+    stroke: var(--bright-purple);
 }
 
 /************************************************

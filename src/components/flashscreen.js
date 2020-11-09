@@ -10,7 +10,7 @@ function FlashScreen() {
                 </path>
             </defs>
             <g><g><g><g>
-                <use href="#o5qPllXEH" opacity="1" fill-opacity="0" stroke-width="20" >
+                <use href="#o5qPllXEH" opacity="1" fillOpacity="0" strokeWidth="20" >
                 </use>
             </g></g></g></g>
         </svg>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import fire from '../config/Fire';
 
 function Login() {
 
@@ -8,6 +9,8 @@ function Login() {
     const [name, setName] = useState("");
     const [confirmPass, setConfirmPass] = useState("");
     const [loginBtn, setLoginBtn] = useState(true);
+    const [fireErrors, setFireErrors] = useState("");
+    const [samePass, setSame] = useState(false);
 
     let submitBtn = loginBtn 
         ? (<input className="onboard-submit" type="submit" onClick={login} value="Login" />)
@@ -25,7 +28,7 @@ function Login() {
     
     let nameInputs = !loginBtn
         ?   (<div className="onboard-input-wrapper">
-                <label className="onboard-label" for="name">Name</label>
+                <label className="onboard-label" htmlFor="name">Name</label>
                 <input 
                     className="onboard-text-input"
                     type="text"
@@ -38,7 +41,7 @@ function Login() {
 
     let confirmInputs = !loginBtn
         ?   (<div className="onboard-input-wrapper">
-                <label className="onboard-label" for="confirm-password">Confirm Password</label>
+                <label className="onboard-label" htmlFor="confirm-password">Confirm Password</label>
                 <input 
                     className="onboard-text-input"
                     type="password"
@@ -49,9 +52,24 @@ function Login() {
             </div>)
         : (<></>);
 
-    function login() {}
+
+    function login(e) {
+        e.preventDefault();
+        return fire.auth().signInWithEmailAndPassword(email, password)
+        .catch((error) => {
+            setFireErrors(error.message);
+        });
+    }
     
-    function register() {}
+    function register(e) {
+        e.preventDefault();
+        if (samePass) {
+            fire.auth().createUserWithEmailAndPassword(email, password)
+            .catch((error) => {
+                setFireErrors(error.message);
+            });
+        }
+    }
 
     function getAction(action) {
         if (action === 'reg') {
@@ -72,6 +90,11 @@ function Login() {
             setName(e.target.value);
         } else if (e.target.name === "confirm-password") {
             setConfirmPass(e.target.value);
+            if (e.target.value !== password) {
+                setSame(false);
+            } else {
+                setSame(true);
+            }
         }
     }
 
@@ -80,10 +103,11 @@ function Login() {
             <h3 className="onboard-title">
                 {formHeader}
             </h3>
+            {fireErrors}
             <form className="onboard-form">
                 {nameInputs}
                 <div className="onboard-input-wrapper">
-                    <label className="onboard-label" for="email">Email</label>
+                    <label className="onboard-label" htmlFor="email">Email</label>
                     <input 
                         className="onboard-text-input"
                         type="email"
@@ -93,7 +117,7 @@ function Login() {
                     />
                 </div>
                 <div className="onboard-input-wrapper">
-                <label className="onboard-label" for="password">Password</label>
+                <label className="onboard-label" htmlFor="password">Password</label>
                     <input 
                         className="onboard-text-input"
                         type="password"
