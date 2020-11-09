@@ -9,11 +9,20 @@ function Create(props) {
     const [cards, setCards] = useState([["",""]]);
     const [numCards, setNumCards] = useState(0);
     const [changeTerm, setChangeTerm] = useState(0);
+    const [deckTitle, setDeckTitle] = useState("");
 
     
+    // Blank useEffect to rerender based on the dependencies
     useEffect(() => {
     }, [numCards, changeTerm]);
+
+    // Update deck title when user types in deck title textbox
+    function titleChange(event) {
+        setDeckTitle(event.target.value);
+    }
     
+    // When button is clicked, add another blank double input for another term/def
+    // setNumCards triggers rerender with useEffect
     const addMore = () => {
         let currCards = cards;
         currCards.push(["", ""]);
@@ -21,6 +30,10 @@ function Create(props) {
         setNumCards(numCards + 1);
     }
 
+    // When a textbox updates with a new char, get new char and determine if it 
+    // should be assigned to 
+    // term(0) or def(1) 
+    // for that specific term/def array
     function handleChangeTerm(newTerm, key) {
         let editCards = cards;
         if (newTerm.charAt(0) === "0") {
@@ -31,7 +44,8 @@ function Create(props) {
         setCards(editCards);
         setChangeTerm(changeTerm + 1);
     }
-
+    
+    
     return (
         <div className="create-wrapper">
             <div className="top-nav">
@@ -43,7 +57,7 @@ function Create(props) {
                         <line x1="5" y1="12" x2="9" y2="8" />
                     </svg>
                 </button>
-                <ConfirmBtn user={props.user} deck={cards} />
+                <ConfirmBtn user={props.location.state.user} title={deckTitle} deck={cards} />
             </div>
             <div className="create-input-wrapper">
                 <input 
@@ -51,6 +65,8 @@ function Create(props) {
                     type="text" 
                     placeholder="Deck Title"
                     maxLength="15"
+                    value={deckTitle}
+                    onChange={titleChange}
                 />
             </div>
             {Object.keys(cards)

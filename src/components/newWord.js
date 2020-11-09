@@ -3,18 +3,16 @@ import React, { useEffect } from 'react';
 function NewWord(props) {
 
     useEffect(() => {
-        console.log("child update");
+        
     }, [props.term]);
 
+    // Send new term/def information with the associated number
+    // Parent element will split the number and determine where to assign
+    // the info (term: 0, def: 1)
     function handleChangeTerm(event, num) {
         props.onChange(num + event.target.value);
     }
 
-    // function handleChangeDef(event) {
-    //     props.onChange(event.target.value);
-    // }
-
-    // console.log(props);
     return (
         <div className="new-word-wrapper">
             <input

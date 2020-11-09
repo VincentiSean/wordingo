@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { 
+    BrowserRouter as Router, 
+    Switch, 
+    Route
+} from 'react-router-dom';
 // import fire from '../config/Fire';
 
 import BottomNav from './bottomNav';
 import Sets from './sets';
+import Create from './create';
 
 function Home(props) {
-
-    const [page, setPage] = useState(<Sets />);
 
     // function logout() {
     //     fire.auth().signOut().then(function() {
@@ -14,16 +18,21 @@ function Home(props) {
     //         console.error('Sign Out Error', error);
     //       });
     // }
-
+    console.log(props.user);
     return (
-        <div className="home-wrapper">
-            {page}
-            {/* <button onClick={logout}>Sign Out</button> */}
-            <BottomNav user={props.user} page={newPage => setPage(newPage)} />
-        </div>
+        <Router>
+            <div className="home-wrapper">
+                <Switch>
+                    <Route exact path="/index.html" component={props => <Sets />}></Route>
+                    <Route exact path="/create" component={props => <Create {...props}/>} />
+                </Switch>
+                {/* {page} */}
+                {/* <button onClick={logout}>Sign Out</button> */}
+                <BottomNav user={props.user} />
+            </div>
+        </Router>
+        
     );
 
 } export default Home
 
-
-// Change system to React-Router dummy, don't reinvent the wheel...so convoluted
