@@ -10,13 +10,20 @@ function ConfirmBtn(props) {
         let deck = props.deck;
         let userID = props.user;
         let deckTitle = props.title;
-        let deckID = `deck-${Date.now()}`;
+        let deckID = "";
+        if (props.deckID === "") {
+            deckID = `deck-${Date.now()}`;
+        } else {
+            deckID = props.deckID;
+        }
+        let numCards = deck.length;
 
         for (let i = 0; i < deck.length; i++) {
             for (let j = 0; j < 2; j++) {
                 if (deck[i][j] === "") {
                     delete deck[i][0];
                     delete deck[i][1];
+                    numCards--;
                 }
             }
         }
@@ -24,7 +31,9 @@ function ConfirmBtn(props) {
         db.ref(`all-decks/${userID}/${deckID}`)
             .set({
                 "title": deckTitle,
-                "terms": deck
+                "terms": deck,
+                "deckID": deckID,
+                "numCards": numCards
             })
     }
     
@@ -32,7 +41,8 @@ function ConfirmBtn(props) {
         <Link
             className="check-btn-link"
             to={{
-                pathname: "/index.html"
+                pathname: "/index.html",
+                state: { user: props.user }
             }}
         >
             <button className="top-nav-btn" onClick={saveDeck}>

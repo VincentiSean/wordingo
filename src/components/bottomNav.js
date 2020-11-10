@@ -1,22 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Sets from './sets';
-import Create from './create';
-
 const BottomNav = ({ page, user }) => {
 
-    // function handleClick(location) {
-    //     console.log(location);
-    
-    //     if (location === "home") {
-    //         page(<Sets user={user} />);
-    //     } else if (location === "create") {
-    //         page(<Create user={user} />);
-    //     }
-    // }
-    console.log(user);
-
+    // console.log(user.uid);
     return (
         <div className="nav-wrapper">
             <Link 
@@ -37,7 +24,10 @@ const BottomNav = ({ page, user }) => {
                 className="nav-btn"
                 to={{ 
                     pathname: "/create",
-                    state: { user: user.uid } 
+                    state: { 
+                        user: user.uid,
+                        deckID: ""
+                    } 
                 }}
             >
                 <svg className="nav-svg icon icon-tabler icon-tabler-plus" xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" strokeWidth="2" stroke="#7165b9" fill="none" strokeLinecap="round" strokeLinejoin="round">

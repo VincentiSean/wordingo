@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { fire, db } from '../config/Fire';
 
 import NewWord from './newWord';
 import AddAnother from './addAnother';
@@ -10,11 +11,40 @@ function Create(props) {
     const [numCards, setNumCards] = useState(0);
     const [changeTerm, setChangeTerm] = useState(0);
     const [deckTitle, setDeckTitle] = useState("");
+    const [deckID, setDeckID] = useState("");
 
     
-    // Blank useEffect to rerender based on the dependencies
+    // numCards is used to rerender
+    // checks if deckID is already set and if so, fetch deck (user is here to edit not create new deck)
     useEffect(() => {
-    }, [numCards, changeTerm]);
+        let tempDeckID = props.location.state.deckID;
+        if (numCards <= 1) {
+            if (tempDeckID !== "") {
+                setDeckID(tempDeckID);
+                fetchDeck();
+            }
+        }
+    }, [numCards, changeTerm, props.location.state.deckID]);
+
+    // Fetches the deck (specifically, the terms) to edit
+    function fetchDeck() {
+        console.log("fetching....")
+
+        // Get decks terms and add to 'cards'
+        db.ref(`all-decks/${props.location.state.user}/${deckID}/terms`).on("value", snapshot => {
+            let deck = [];
+            snapshot.forEach(snap => {
+                deck.push(snap.val());
+            });
+            setCards(deck);
+            setNumCards(deck.length + 1);
+        });
+
+        // Get deck title and add to 'deckTitle'
+        db.ref(`all-decks/${props.location.state.user}/${deckID}/title`).on("value", snapshot => {
+            setDeckTitle(snapshot.val());
+        });
+    }
 
     // Update deck title when user types in deck title textbox
     function titleChange(event) {
@@ -45,7 +75,6 @@ function Create(props) {
         setChangeTerm(changeTerm + 1);
     }
     
-    
     return (
         <div className="create-wrapper">
             <div className="top-nav">
@@ -57,7 +86,12 @@ function Create(props) {
                         <line x1="5" y1="12" x2="9" y2="8" />
                     </svg>
                 </button>
-                <ConfirmBtn user={props.location.state.user} title={deckTitle} deck={cards} />
+                <ConfirmBtn 
+                    user={props.location.state.user}
+                    title={deckTitle} 
+                    deck={cards}
+                    deckID={deckID}
+                />
             </div>
             <div className="create-input-wrapper">
                 <input 
@@ -67,6 +101,7 @@ function Create(props) {
                     maxLength="15"
                     value={deckTitle}
                     onChange={titleChange}
+                    required
                 />
             </div>
             {Object.keys(cards)

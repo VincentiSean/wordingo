@@ -161,6 +161,67 @@ body {
     right: 0;
 }
 
+.sets-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.each-set-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid var(--action-purple);
+    border-radius: 12px;
+    color: var(--action-purple);
+    cursor: default;
+    height: calc(90vw *  0.35);
+    max-height: 200px;
+    margin: 20px 0 0;
+    opacity: 0.6;
+    padding: 12px;
+    width: 90vw;
+    max-width: 500px;
+    
+    
+    &:hover, 
+    &:active, 
+    &:focus {
+        box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.1);
+        height: 200px;
+        opacity: 1;
+        transition: height 200ms ease-in-out;
+
+        .set-bttm-wrapper {
+            display: flex;
+            margin-top: 50px;
+            opacity: 1;
+
+            transition: 
+                margin 250ms ease-in-out, 
+                opacity 450ms ease-in-out;
+        }
+    }
+}
+
+.set-top-wrapper {
+    display: flex;
+}
+
+.set-text-wrapper {
+    margin: 0 0 0 20px;
+}
+
+.set-bttm-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 0;
+    margin-bottom: 20px;
+    opacity: 0;
+    width: 100%;
+}
+
 .create-wrapper {
     display: flex;
     flex-direction: column;
@@ -235,6 +296,22 @@ body {
     font-size: 0.85rem;
 }
 
+.page-title {
+    color: var(--action-purple);
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 15px 0 0;
+}
+
+.set-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.set-num-terms {
+    font-size: 1rem;
+}
+
 /************************************************
         Forms / Inputs / Links
 *************************************************/
@@ -288,6 +365,36 @@ body {
     background: none;
     border: none;
     cursor: pointer;
+}
+
+.practice-btn {
+    background: var(--action-purple);
+    border: none;
+    border-radius: 12px;
+    color: var(--off-white);
+    cursor: pointer;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 20px 0 30px;
+    padding: 12px;
+    text-align: center;
+    text-decoration: none;
+    width: 55%;
+}
+
+.edit-btn {
+    background: var(--eggplant);
+    border: none;
+    border-radius: 12px;
+    color: var(--off-white);
+    cursor: pointer;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 20px 0 30px;
+    padding: 12px;
+    text-align: center;
+    text-decoration: none;
+    width: 35%;
 }
 
 .deck-title-input {
@@ -355,6 +462,13 @@ body {
 
 .top-nav-svg {
     stroke: var(--bright-purple);
+}
+
+.set-image {
+    border: 2px solid var(--action-purple);
+    border-radius: 10px;
+    width: 25vw;
+    max-width: 100px;
 }
 
 /************************************************
