@@ -1,16 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const BottomNav = ({ page, user }) => {
+const BottomNav = ({ page, user, props }) => {
 
-    // console.log(user.uid);
+    
     return (
         <div className="nav-wrapper">
             <Link 
                 className="nav-btn"
                 to={{ 
                     pathname: "/index.html",
-                    state: { user: user.uid }
+                    state: { 
+                        user: user.uid,
+                    }
                 }}
             >
                 <svg className="nav-svg icon icon-tabler icon-tabler-home" xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#7165b9" fill="none" strokeLinecap="round" strokeLinejoin="round">

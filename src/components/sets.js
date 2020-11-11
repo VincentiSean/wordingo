@@ -45,13 +45,20 @@ function Sets(props) {
                         <div className="set-bttm-wrapper">
                             <Link 
                                 className="practice-btn" 
-                                to={{ pathname: "" }}
+                                to={{ 
+                                    pathname: `/practice/${deck.title}`,
+                                    state: {
+                                        user: props.user,
+                                        deckID: deck.deckID
+                                    }
+                                }}
                             >
                                 Practice
                             </Link>
                             <Link 
                                 className="edit-btn"
-                                to={{ pathname: "/create",
+                                to={{ 
+                                    pathname: "/create",
                                     state: { 
                                         user: props.user,
                                         deckID: deck.deckID

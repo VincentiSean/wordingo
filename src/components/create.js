@@ -4,6 +4,7 @@ import { fire, db } from '../config/Fire';
 import NewWord from './newWord';
 import AddAnother from './addAnother';
 import ConfirmBtn from './confirmBtn';
+import BackBtn from './backBtn';
 
 function Create(props) {
     
@@ -12,6 +13,7 @@ function Create(props) {
     const [changeTerm, setChangeTerm] = useState(0);
     const [deckTitle, setDeckTitle] = useState("");
     const [deckID, setDeckID] = useState("");
+    const [displayConfirm, setDisplayConfirm] = useState(false);
 
     
     // numCards is used to rerender
@@ -21,14 +23,16 @@ function Create(props) {
         if (numCards <= 1) {
             if (tempDeckID !== "") {
                 setDeckID(tempDeckID);
+                setDisplayConfirm(true);
                 fetchDeck();
             }
         }
-    }, [numCards, changeTerm, props.location.state.deckID]);
+
+    }, [numCards, changeTerm, props.location.state.deckID, displayConfirm]);
+
 
     // Fetches the deck (specifically, the terms) to edit
     function fetchDeck() {
-        console.log("fetching....")
 
         // Get decks terms and add to 'cards'
         db.ref(`all-decks/${props.location.state.user}/${deckID}/terms`).on("value", snapshot => {
@@ -46,11 +50,26 @@ function Create(props) {
         });
     }
 
+
+    // Checks to see if at least one term/def is filled out and there is a deck title
+    // If so, display the check button, else don't 
+    function checkConfirm() {
+        if (deckTitle !== "" && numCards > 0) {
+            setDisplayConfirm(true);
+            setChangeTerm(changeTerm + 1);
+        } else {
+            setDisplayConfirm(false);
+        }
+    }
+
+
     // Update deck title when user types in deck title textbox
     function titleChange(event) {
         setDeckTitle(event.target.value);
+        checkConfirm();
     }
     
+
     // When button is clicked, add another blank double input for another term/def
     // setNumCards triggers rerender with useEffect
     const addMore = () => {
@@ -59,6 +78,7 @@ function Create(props) {
         setCards(currCards);
         setNumCards(numCards + 1);
     }
+
 
     // When a textbox updates with a new char, get new char and determine if it 
     // should be assigned to 
@@ -73,25 +93,25 @@ function Create(props) {
         }
         setCards(editCards);
         setChangeTerm(changeTerm + 1);
+        checkConfirm();
     }
+    
+    console.log(props);
     
     return (
         <div className="create-wrapper">
             <div className="top-nav">
-                <button className="top-nav-btn">
-                    <svg className="top-nav-svg icon icon-tabler icon-tabler-arrow-narrow-left" xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#B3329C" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                        <line x1="5" y1="12" x2="9" y2="16" />
-                        <line x1="5" y1="12" x2="9" y2="8" />
-                    </svg>
-                </button>
-                <ConfirmBtn 
-                    user={props.location.state.user}
-                    title={deckTitle} 
-                    deck={cards}
-                    deckID={deckID}
-                />
+                <BackBtn props={props} />
+                {displayConfirm
+                    ? <ConfirmBtn 
+                        user={props.location.state.user}
+                        title={deckTitle} 
+                        deck={cards}
+                        deckID={deckID}
+                    />
+                    : <></>
+                }
+                
             </div>
             <div className="create-input-wrapper">
                 <input 
@@ -101,7 +121,6 @@ function Create(props) {
                     maxLength="15"
                     value={deckTitle}
                     onChange={titleChange}
-                    required
                 />
             </div>
             {Object.keys(cards)
